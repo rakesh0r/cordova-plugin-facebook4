@@ -255,9 +255,16 @@
         dialog.shareContent = content;
         dialog.delegate = self;
         // Adopt native share sheets with the following line
-        if (params[@"share_sheet"]) {
-            dialog.mode = FBSDKShareDialogModeShareSheet;
+        // if (params[@"share_sheet"]) {
+        //     dialog.mode = FBSDKShareDialogModeShareSheet;
+        // }
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fbauth2://"]]){
+            dialog.mode = FBSDKShareDialogModeNative;
         }
+        else {
+            dialog.mode = FBSDKShareDialogModeBrowser; //or FBSDKShareDialogModeAutomatic
+        }
+
         [dialog show];
         return;
     } else if ([method isEqualToString:@"apprequests"]) {
